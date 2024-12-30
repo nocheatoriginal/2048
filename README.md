@@ -1,6 +1,6 @@
 # 2048
 
-![Alt-Text](app/src/main/resources/sprites/minimize.png)
+![2048](app/src/main/resources/sprites/minimize.png)
 
 ### Build and Run
 

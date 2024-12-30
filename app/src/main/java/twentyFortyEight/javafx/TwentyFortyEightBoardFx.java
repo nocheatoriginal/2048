@@ -13,7 +13,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import twentyFortyEight.config.TwentyFortyEightConfig;
 import twentyFortyEight.javafx.viewmodel.TwentyFortyEightViewmodel;
 import twentyFortyEight.provider.TwentyFortyEightBoard;
@@ -49,8 +48,10 @@ public class TwentyFortyEightBoardFx extends Pane implements ChangeListener<Twen
     rootStack.setBackground(Background.fill(TwentyFortyEightConfig.BACKGROUND_COLOR));
 
     GridPane grid = new GridPane();
-    grid.setHgap(10);
-    grid.setVgap(10);
+    int gap = (int)(10 / TwentyFortyEightConfig.getMultiplier());
+
+    grid.setHgap(gap);
+    grid.setVgap(gap);
     grid.setAlignment(Pos.CENTER);
 
     this.setFocusTraversable(true);

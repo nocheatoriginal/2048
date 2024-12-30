@@ -5,6 +5,9 @@ import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
+
+import twentyFortyEight.config.GameMode;
+import twentyFortyEight.config.TwentyFortyEightConfig;
 import twentyFortyEight.config.TwentyFortyEightListener;
 
 /**
@@ -113,8 +116,7 @@ public class TwentyFortyEightService {
     for (int col = 0; col < size; col++) {
       int[] column = board.getColumn(col);
       column = compress(column);
-      column = merge(column);
-      column = compress(column);
+      column = compress(merge(column));
       board.setColumn(col, column);
     }
   }
@@ -125,8 +127,7 @@ public class TwentyFortyEightService {
       int[] column = board.getColumn(col);
       reverseArray(column);
       column = compress(column);
-      column = merge(column);
-      column = compress(column);
+      column = compress(merge(column));
       reverseArray(column);
       board.setColumn(col, column);
     }
@@ -137,8 +138,7 @@ public class TwentyFortyEightService {
     for (int row = 0; row < size; row++) {
       int[] line = board.getRow(row);
       line = compress(line);
-      line = merge(line);
-      line = compress(line);
+      line = compress(merge(line));
       board.setRow(row, line);
     }
   }
@@ -149,8 +149,7 @@ public class TwentyFortyEightService {
       int[] line = board.getRow(row);
       reverseArray(line);
       line = compress(line);
-      line = merge(line);
-      line = compress(line);
+      line = compress(merge(line));
       reverseArray(line);
       board.setRow(row, line);
     }
@@ -206,7 +205,7 @@ public class TwentyFortyEightService {
   }
 
   private void checkGameWon() {
-    if (gameWon) {
+    if (gameWon || TwentyFortyEightConfig.MODE != GameMode.DEFAULT) {
       return;
     }
     int size = board.getSize();

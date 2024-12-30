@@ -13,6 +13,10 @@ public class TwentyFortyEightConfig {
   public static final Color BACKGROUND_COLOR = Color.web("#8f8277");
   public static final Color STATUS_COLOR = Color.web("#fcfcfc");
   public static final Font FONT = Font.loadFont(TwentyFortyEightConfig.class
-      .getResourceAsStream("/fonts/imprigma-regular.ttf"), 34);
-  public static OperatingMode MODE = OperatingMode.PRODUCTION;
+      .getResourceAsStream("/fonts/imprigma-regular.ttf"), 34 / multiplier);
+  public static GameMode MODE = GameMode.DEFAULT;
+
+  public static double getMultiplier() {
+    return multiplier;
+  }
 }

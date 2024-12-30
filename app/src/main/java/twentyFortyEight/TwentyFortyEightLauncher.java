@@ -3,7 +3,7 @@ package twentyFortyEight;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import twentyFortyEight.config.OperatingMode;
+import twentyFortyEight.config.GameMode;
 import twentyFortyEight.config.TwentyFortyEightConfig;
 import twentyFortyEight.javafx.TwentyFortyEightWindowFx;
 
@@ -27,10 +27,6 @@ public class TwentyFortyEightLauncher extends Application {
    * @param args String[]
    */
   public static void main(String[] args) {
-    if (args.length > 0 && args[0].equals("DEBUG")) {
-      TwentyFortyEightConfig.MODE = OperatingMode.DEBUG;
-    }
-
     launch(args);
   }
 }
