@@ -1,3 +1,7 @@
+# 2048
+
+![Alt-Text](app/src/main/resources/sprites/minimize.png)
+
 ### Build and Run
 
 #### Use the gradle wrapper to make sure the application works properly!
