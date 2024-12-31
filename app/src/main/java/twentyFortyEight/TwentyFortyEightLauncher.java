@@ -3,8 +3,6 @@ package twentyFortyEight;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import twentyFortyEight.config.GameMode;
-import twentyFortyEight.config.TwentyFortyEightConfig;
 import twentyFortyEight.javafx.TwentyFortyEightWindowFx;
 
 /**
