@@ -9,4 +9,6 @@ public interface TwentyFortyEightListener {
   void updateBoard(TwentyFortyEightBoard board);
 
   void updateStatus(String status);
+
+  void gameOver(boolean lost);
 }

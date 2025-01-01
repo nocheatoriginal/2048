@@ -5,6 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import twentyFortyEight.config.TwentyFortyEightConfig;
 import twentyFortyEight.config.TwentyFortyEightListener;
+import twentyFortyEight.javafx.TwentyFortyEightOverlayFx;
 import twentyFortyEight.provider.TwentyFortyEightBoard;
 import twentyFortyEight.provider.TwentyFortyEightDirection;
 import twentyFortyEight.provider.TwentyFortyEightService;
@@ -16,6 +17,7 @@ public class TwentyFortyEightViewmodel implements TwentyFortyEightListener {
   private final TwentyFortyEightService service;
   private final ObjectProperty<TwentyFortyEightBoard> board;
   private final ObjectProperty<String> status;
+  private final ObjectProperty<TwentyFortyEightOverlayFx> overlay;
 
   /**
    * Creates a new 2048 viewmodel.
@@ -28,6 +30,7 @@ public class TwentyFortyEightViewmodel implements TwentyFortyEightListener {
     this.service.addListener(this);
     this.board = new SimpleObjectProperty<>(service.getBoard());
     this.status = new SimpleObjectProperty<>(service.getStatus());
+    this.overlay = new SimpleObjectProperty<>(new TwentyFortyEightOverlayFx(this));
   }
 
   /**
@@ -48,6 +51,14 @@ public class TwentyFortyEightViewmodel implements TwentyFortyEightListener {
     return status;
   }
 
+  /**
+   * Returns the overlay property.
+   *
+   * @return The overlay property.
+   */
+  public ObjectProperty<TwentyFortyEightOverlayFx> overlayProperty() {
+    return overlay;
+  }
 
   /**
    * Resets the game.
@@ -120,5 +131,16 @@ public class TwentyFortyEightViewmodel implements TwentyFortyEightListener {
    */
   public void resetGame() {
     service.reset();
+    overlay.get().hideOverlay();
+  }
+
+  /**
+   * Show the game over overlay.
+   */
+  @Override
+  public void gameOver(boolean lost) {
+    Platform.runLater(() -> {
+      overlay.get().showOverlay(lost);
+    });
   }
 }

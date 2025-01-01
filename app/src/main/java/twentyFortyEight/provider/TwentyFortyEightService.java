@@ -5,7 +5,6 @@ import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
-
 import twentyFortyEight.config.GameMode;
 import twentyFortyEight.config.TwentyFortyEightConfig;
 import twentyFortyEight.config.TwentyFortyEightListener;
@@ -40,7 +39,10 @@ public class TwentyFortyEightService {
     gameWon = false;
     score = 0;
 
-    status = "2048 - Score: " + score;
+    status = TwentyFortyEightConfig.MODE == GameMode.DEFAULT
+        ? TwentyFortyEightConfig.GOAL + " - Score: " + score
+        : GameMode.ENDLESS + " - Score: " + score;
+
     notifyListeners(listener -> listener.updateStatus(status));
     notifyListeners(listener -> listener.updateBoard(board));
     addRandomTile();
@@ -104,7 +106,9 @@ public class TwentyFortyEightService {
     checkGameOver();
 
     if (!gameOver && !gameWon) {
-      status = "2048 - Score: " + score;
+      status = TwentyFortyEightConfig.MODE == GameMode.DEFAULT
+          ? TwentyFortyEightConfig.GOAL + " - Score: " + score
+          : GameMode.ENDLESS + " - Score: " + score;
     }
 
     notifyListeners(listener -> listener.updateStatus(status));
@@ -208,12 +212,14 @@ public class TwentyFortyEightService {
     if (gameWon || TwentyFortyEightConfig.MODE != GameMode.DEFAULT) {
       return;
     }
+
     int size = board.getSize();
     for (int row = 0; row < size; row++) {
       for (int col = 0; col < size; col++) {
-        if (board.getValue(row, col) == 2048) {
+        if (board.getValue(row, col) == TwentyFortyEightConfig.GOAL) {
           gameWon = true;
-          status = "Gewonnen! Score: " + score;
+          status = TwentyFortyEightConfig.GAME_WON + " Score: " + score;
+          notifyListeners(listener -> listener.gameOver(false));
           return;
         }
       }
@@ -224,11 +230,14 @@ public class TwentyFortyEightService {
     if (board.hasEmptyField()) {
       return;
     }
+
     if (canMergeAnyCell()) {
       return;
     }
+
     gameOver = true;
-    status = "Game Over! Score: " + score;
+    status = TwentyFortyEightConfig.GAME_OVER + " Score: " + score;
+    notifyListeners(listener -> listener.gameOver(true));
   }
 
   private boolean canMergeAnyCell() {

@@ -6,13 +6,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import twentyFortyEight.config.TwentyFortyEightConfig;
 import twentyFortyEight.javafx.viewmodel.TwentyFortyEightViewmodel;
 import twentyFortyEight.provider.TwentyFortyEightBoard;
@@ -21,13 +19,9 @@ import twentyFortyEight.provider.TwentyFortyEightBoard;
  * The 2048 board.
  */
 public class TwentyFortyEightBoardFx extends Pane implements ChangeListener<TwentyFortyEightBoard> {
-  private TwentyFortyEightBoard internalBoard;
-  private TwentyFortyEightCellFx[][] cells;
-  private TwentyFortyEightViewmodel viewModel;
-  private HBox topbar;
-  private Label status;
-  private StackPane gameOverOverlay;
-
+  private final TwentyFortyEightCellFx[][] cells;
+  private final TwentyFortyEightViewmodel viewModel;
+  private final HBox topbar;
   /**
    * The visual representation of the 2048 board.
    *
@@ -37,7 +31,7 @@ public class TwentyFortyEightBoardFx extends Pane implements ChangeListener<Twen
     super();
     this.viewModel = viewModel;
     viewModel.boardProperty().addListener(this);
-    internalBoard = viewModel.boardProperty().get();
+    TwentyFortyEightBoard internalBoard = viewModel.boardProperty().get();
 
     cells = new
         TwentyFortyEightCellFx[TwentyFortyEightConfig.MAP_SIZE][TwentyFortyEightConfig.MAP_SIZE];
@@ -60,7 +54,7 @@ public class TwentyFortyEightBoardFx extends Pane implements ChangeListener<Twen
     for (int row = 0; row < TwentyFortyEightConfig.MAP_SIZE; row++) {
       for (int col = 0; col < TwentyFortyEightConfig.MAP_SIZE; col++) {
         int value = internalBoard.getCell(row, col);
-        cells[row][col] = new TwentyFortyEightCellFx(value, row, col);
+        cells[row][col] = new TwentyFortyEightCellFx(value);
         grid.add(cells[row][col], col, row);
       }
     }
@@ -69,9 +63,7 @@ public class TwentyFortyEightBoardFx extends Pane implements ChangeListener<Twen
     screen.getChildren().addAll(topbar, grid);
     screen.setAlignment(Pos.CENTER);
 
-    gameOverOverlay = createGameOverOverlay();
-    gameOverOverlay.setVisible(false);
-    rootStack.getChildren().addAll(screen, gameOverOverlay);
+    rootStack.getChildren().addAll(screen, viewModel.overlayProperty().get());
     this.getChildren().add(rootStack);
 
     this.setOnKeyPressed(event -> {
@@ -82,44 +74,17 @@ public class TwentyFortyEightBoardFx extends Pane implements ChangeListener<Twen
         case RIGHT, D -> viewModel.moveRight();
         case R -> {
           viewModel.resetGame();
-          gameOverOverlay.setVisible(false);
         }
-        default -> { /* andere Tasten ignorieren */ }
+        default -> { /* do nothing ... */ }
       }
     });
-  }
-
-  /**
-   * Creates an overlay with "Game Over" Text.
-   */
-  private StackPane createGameOverOverlay() {
-    StackPane overlay = new StackPane();
-    overlay.setBackground(new Background(new BackgroundFill(
-        Color.rgb(38, 37, 38, 0.7),
-        null,
-        null
-    )));
-
-    Label gameOverLabel = new Label("Game Over");
-    gameOverLabel.setFont(TwentyFortyEightConfig.FONT);
-    gameOverLabel.setTextFill(Color.RED);
-
-    Label pressRlabel = new Label("Press 'r' to restart");
-    pressRlabel.setFont(TwentyFortyEightConfig.FONT);
-    pressRlabel.setTextFill(Color.WHITE);
-    VBox textBox = new VBox(20, gameOverLabel, pressRlabel);
-    textBox.setAlignment(Pos.CENTER);
-    overlay.getChildren().add(textBox);
-    overlay.setAlignment(Pos.CENTER);
-
-    return overlay;
   }
 
   /**
    * Initialize the top bar (Status).
    */
   private void initTopbar() {
-    status = new Label();
+    Label status = new Label();
     status.textProperty().bindBidirectional(viewModel.statusProperty());
     status.setFont(TwentyFortyEightConfig.FONT);
     status.setTextFill(TwentyFortyEightConfig.STATUS_COLOR);
@@ -149,10 +114,6 @@ public class TwentyFortyEightBoardFx extends Pane implements ChangeListener<Twen
         int number = newBoard.getCell(row, column);
         updateCell(number, row, column);
       }
-    }
-
-    if (viewModel.statusProperty().get().contains("Game Over")) {
-      gameOverOverlay.setVisible(true);
     }
   }
 

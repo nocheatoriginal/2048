@@ -15,7 +15,10 @@ public class TwentyFortyEightConfig {
   public static final Font FONT = Font.loadFont(TwentyFortyEightConfig.class
       .getResourceAsStream("/fonts/imprigma-regular.ttf"), 34 / multiplier);
   public static GameMode MODE = GameMode.DEFAULT;
-
+  public static final int GOAL = 2048;
+  public static final String GAME_OVER = "Game Over!";
+  public static final String GAME_WON = "You win!";
+  public static final boolean SHOW_ZERO = false;
   public static double getMultiplier() {
     return multiplier;
   }

@@ -15,23 +15,15 @@ import twentyFortyEight.provider.TwentyFortyEightTile;
  */
 public class TwentyFortyEightCellFx extends StackPane {
   private final ImageView imageView;
-  private int number;
-  private final int xpos;
-  private final int ypos;
-  private Label label;
+  private final Label label;
 
   /**
    * Creates a new 2048 cell.
    *
    * @param number The number
-   * @param xpos The x position.
-   * @param ypos The y position.
    */
-  public TwentyFortyEightCellFx(int number, int xpos, int ypos) {
+  public TwentyFortyEightCellFx(int number) {
     super();
-    this.number = number;
-    this.xpos = xpos;
-    this.ypos = ypos;
     imageView = new ImageView(TwentyFortyEightTile.BACKGROUND.getSprite());
     Color color = getColorForNumber(number);
     ColorInput colorInput = new
@@ -67,10 +59,6 @@ public class TwentyFortyEightCellFx extends StackPane {
     };
   }
 
-  public int getCell() {
-    return number;
-  }
-
   /**
    * Set the number of a specific cell.
    *
@@ -86,18 +74,10 @@ public class TwentyFortyEightCellFx extends StackPane {
   }
 
   private void setLabelText(int number) {
-    if (number == 0) {
+    if (number == 0 && !TwentyFortyEightConfig.SHOW_ZERO) {
       label.setText(null);
     } else {
       label.setText(String.valueOf(number));
     }
-  }
-
-  public int getX() {
-    return xpos;
-  }
-
-  public int getY() {
-    return ypos;
   }
 }
