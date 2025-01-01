@@ -7,7 +7,7 @@ import twentyFortyEight.config.TwentyFortyEightConfig;
  */
 public class TwentyFortyEightBoard {
   private final int size;
-  private int[][] numbers;
+  private final int[][] numbers;
 
   /**
    * Erzeugt ein neues 2048-Board mit Standardgröße aus der Config.

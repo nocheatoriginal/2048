@@ -1,6 +1,6 @@
 # 2048
 
-![2048](app/src/main/resources/sprites/minimize.png)
+![2048](app/src/main/resources/preview.png)
 
 ### Build and Run
 
@@ -21,4 +21,5 @@
 java --module-path $PATH_TO_FX --add-modules javafx.controls -jar app/build/libs/twentyFortyEight.jar
 ```
 
-#### Code-Author: nocheatoriginal
+#### Author: 
+[nocheatoriginal](https://github.com/nocheatoriginal)

@@ -3,6 +3,8 @@ package twentyFortyEight;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import twentyFortyEight.config.GameMode;
+import twentyFortyEight.config.TwentyFortyEightConfig;
 import twentyFortyEight.javafx.TwentyFortyEightWindowFx;
 
 /**
@@ -14,7 +16,7 @@ public class TwentyFortyEightLauncher extends Application {
     TwentyFortyEightWindowFx window = new TwentyFortyEightWindowFx();
 
     Scene scene = new Scene(window);
-    primaryStage.setTitle("2048");
+    primaryStage.setTitle(String.valueOf(TwentyFortyEightConfig.GOAL));
     primaryStage.setScene(scene);
     primaryStage.show();
   }
@@ -25,6 +27,10 @@ public class TwentyFortyEightLauncher extends Application {
    * @param args String[]
    */
   public static void main(String[] args) {
+    if (args.length > 0 && args[0].equals("ENDLESS")) {
+      TwentyFortyEightConfig.MODE = GameMode.ENDLESS;
+    }
+
     launch(args);
   }
 }

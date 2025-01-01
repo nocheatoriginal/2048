@@ -19,6 +19,7 @@ public class TwentyFortyEightConfig {
   public static final String GAME_OVER = "Game Over!";
   public static final String GAME_WON = "You win!";
   public static final boolean SHOW_ZERO = false;
+
   public static double getMultiplier() {
     return multiplier;
   }

@@ -1,20 +1,16 @@
 package twentyFortyEight.javafx;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorInput;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import twentyFortyEight.config.TwentyFortyEightConfig;
-import twentyFortyEight.provider.TwentyFortyEightTile;
 
 /**
  * 2048 cell class for JavaFX.
  */
 public class TwentyFortyEightCellFx extends StackPane {
-  private final ImageView imageView;
   private final Label label;
 
   /**
@@ -24,17 +20,13 @@ public class TwentyFortyEightCellFx extends StackPane {
    */
   public TwentyFortyEightCellFx(int number) {
     super();
-    imageView = new ImageView(TwentyFortyEightTile.BACKGROUND.getSprite());
-    Color color = getColorForNumber(number);
-    ColorInput colorInput = new
-        ColorInput(0, 0, imageView.getImage().getWidth(), imageView.getImage().getHeight(), color);
-    Blend blend = new Blend(BlendMode.MULTIPLY, null, colorInput);
-    imageView.setEffect(blend);
-
     label = new Label();
-    this.setLabelText(number);
+    label.setMinSize(TwentyFortyEightConfig.SPRITE_SIZE, TwentyFortyEightConfig.SPRITE_SIZE);
+    label.setMaxSize(TwentyFortyEightConfig.SPRITE_SIZE, TwentyFortyEightConfig.SPRITE_SIZE);
     label.setFont(TwentyFortyEightConfig.FONT);
-    this.getChildren().addAll(imageView, label);
+    label.setAlignment(Pos.CENTER);
+    this.updateLabel(number);
+    this.getChildren().addAll(label);
   }
 
   private Color getColorForNumber(int number) {
@@ -65,19 +57,15 @@ public class TwentyFortyEightCellFx extends StackPane {
    * @param number new Number
    */
   public void setCell(int number) {
-    this.setLabelText(number);
-    Color color = getColorForNumber(number);
-    ColorInput colorInput = new
-        ColorInput(0, 0, imageView.getImage().getWidth(), imageView.getImage().getHeight(), color);
-    Blend blend = new Blend(BlendMode.MULTIPLY, null, colorInput);
-    imageView.setEffect(blend);
+    this.updateLabel(number);
   }
 
-  private void setLabelText(int number) {
+  private void updateLabel(int number) {
     if (number == 0 && !TwentyFortyEightConfig.SHOW_ZERO) {
       label.setText(null);
     } else {
       label.setText(String.valueOf(number));
     }
+    label.setBackground(Background.fill(getColorForNumber(number)));
   }
 }

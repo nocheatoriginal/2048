@@ -67,12 +67,12 @@ shadowJar {
     mergeServiceFiles()
 }
 
-tasks.register('debug', JavaExec) {
+tasks.register('endless', JavaExec) {
     //dependsOn('test')
-    description = 'Run the application in debug mode with DEBUG argument'
+    description = 'Run the game in endloss mode with ENDLESS argument'
     classpath = sourceSets.main.runtimeClasspath
     mainClass.set('twentyFortyEight.TwentyFortyEightLauncher')
-    args = ['DEBUG']
+    args = ['ENDLESS']
 
     jvmArgs = [
             '--module-path', configurations.runtimeClasspath.asPath,
